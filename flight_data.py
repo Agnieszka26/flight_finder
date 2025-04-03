@@ -1,4 +1,5 @@
 class FlightData:
+    """This class is responsible for store flight data received from Amadeus API"""
     def __init__(self, city):
         self.city = city,
         self.price = "N/A",
@@ -18,6 +19,7 @@ class FlightData:
         self.return_date = x
     def get_data(self):
         return {
+            'city': self.city,
             'price': self.price,
             'origin_airport': self.origin_airport,
             'destination_airport': self.destination_airport,

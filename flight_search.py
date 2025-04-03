@@ -1,13 +1,13 @@
 import requests
 from datetime import datetime, timedelta
-from pprint import pprint
 import os
 from dotenv import load_dotenv
+
 load_dotenv()
 AMADEUS_API_KEY=os.getenv("AMADEUS_API_KEY")
 AMADEUS_API_SECRET=os.getenv("AMADEUS_API_SECRET")
-
 BASE_API_URL = "https://test.api.amadeus.com"
+
 token_url= f"{BASE_API_URL}/v1/security/oauth2/token"
 city_search_url = f"{BASE_API_URL}/v1/reference-data/locations/cities"
 offer_url = f"{BASE_API_URL}/v2/shopping/flight-offers"
@@ -15,11 +15,13 @@ offer_url = f"{BASE_API_URL}/v2/shopping/flight-offers"
 header = {
     "Content-Type": 'application/x-www-form-urlencoded'
 }
+
 body = {
     'grant_type': 'client_credentials',
     'client_id':AMADEUS_API_KEY,
     'client_secret': AMADEUS_API_SECRET
 }
+
 resp = requests.post(url=token_url, headers=header, data=body)
 resp.raise_for_status()
 access_token = resp.json()["access_token"]
@@ -28,7 +30,7 @@ headers = {
         }
 
 class FlightSearch:
-    '''This class is responsible for talking to the Flight Search API.'''
+    """This class is responsible for talking to the Flight Search API."""
     def __init__(self, city_name):
         self.iata_code = self.get_iata_code(city_name)
     def get_iata_code(self,city_name):
