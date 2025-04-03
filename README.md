@@ -23,5 +23,9 @@ Amadeus Search for Airport Codes by City name - https://developers.amadeus.com/s
 
 Twilio Messaging (SMS or WhatsApp) API - https://www.twilio.com/docs/messaging/quickstart/python
 
+## environmental variables
+
+Based on file *.env_default* and *APIs Required* create your own privet variables.
+
 ## Credits
 This project is based on the [100 Days of Code: The Complete Python Pro Bootcamp](https://www.udemy.com/course/100-days-of-code/?) by Angela Yu on Udemy.
