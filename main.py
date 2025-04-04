@@ -17,28 +17,18 @@ for row in sheet_data:
     if 'iataCode' in row:
         iata_code = row["iataCode"]
         saved_lowest_price = row["lowestPrice"]
-        data = flight_search.get_offers(iata_code)
-        for flight_offer in data:
-            price = flight_offer["price"]['total']
-            flight_data.set_price(price)
-            itineraries = flight_offer['itineraries']
-            for i in itineraries:
-                segments = i['segments']
-                for s in segments:
-                    departure = s['departure']
-                    flight_data.set_origin_airport(departure["iataCode"])
-                    flight_data.set_out_date(departure["at"])
-                    arrival = s['arrival']
-                    flight_data.set_return_date(arrival["at"])
-                    flight_data.set_destination_airport(arrival["iataCode"])
-        if float(flight_data.get_data()["price"]) < float(saved_lowest_price):
-            notification_manager = NotificationManager(flight_data.get_data())
-            notification_manager.send_message()
-            data_manager.update_price(row_id, flight_data.get_data()["price"])
-            print(f"Jest niższa, update your table and alert. \nprice response: {flight_data.get_data()['price']} \nsaved_lowest_price:{saved_lowest_price}")
-        else:
-            print(f"nie ma\n{flight_data.get_data()['city'][0]}"
-                  f"\nprice response: {flight_data.get_data()['price']} \nsaved_lowest_price:{saved_lowest_price}")
+        offers = flight_search.get_offers(iata_code)
+        for offer in offers:
+            flight_data.parse_offer(offer)
+            price = float(flight_data.price)
+            if price < float(saved_lowest_price):
+                notification_manager = NotificationManager(flight_data.get_data())
+                notification_manager.send_message()
+                data_manager.update_price(row_id, flight_data.get_data()["price"])
+                print(f"Jest niższa, update your table and alert. \nprice response: {flight_data.get_data()['price']} \nsaved_lowest_price:{saved_lowest_price}")
+            else:
+                print(f"nie ma\n{city}"
+                      f"\nprice response: {price} \nsaved_lowest_price:{saved_lowest_price}")
     else:
         iata_code = flight_search.iata_code
         print(iata_code)
