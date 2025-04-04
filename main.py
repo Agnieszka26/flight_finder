@@ -1,6 +1,6 @@
 #This file will need to use the DataManager,FlightSearch, FlightData, NotificationManager classes
 #to achieve the program requirements.
-
+import pprint
 from data_manager import DataManager
 from flight_search import FlightSearch
 from flight_data import FlightData
@@ -33,3 +33,11 @@ for row in sheet_data:
         iata_code = flight_search.iata_code
         print(iata_code)
         data_manager.update_iata_code(row_id, iata_code)
+
+# flight_search = FlightSearch("Hong Kong")
+# offers = flight_search.get_offers("HKG", False)
+# flight_data = FlightData("Hong Kong")
+# flight_data.parse_offer(offers[0])
+# print(flight_data.get_data())
+
+# pprint.pprint(offers)

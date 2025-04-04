@@ -34,7 +34,6 @@ class FlightSearch:
     def __init__(self, city_name):
         self.iata_code = self.get_iata_code(city_name)
     def get_iata_code(self,city_name):
-
         params = {
             'keyword': city_name.upper(),
             'max': 1
@@ -46,20 +45,19 @@ class FlightSearch:
         for city in data:
             if 'iataCode' in city:
                 i = city['iataCode']
-
         return i
-    def get_offers(self, destination_location_code):
+    def get_offers(self, destination_location_code, is_direct=True):
         today = datetime.now()
         tomorrow = (today + timedelta(days=1)).strftime("%Y-%m-%d")
         half_year = (today + timedelta(days=30 * 6)).strftime("%Y-%m-%d")
-
+        non_stop = str(is_direct).lower()
         query = {
             "originLocationCode": "LON",
             "destinationLocationCode": destination_location_code,
             "departureDate": tomorrow,
             "returnDate": half_year,
             "adults": 1,
-            "nonStop": "true",
+            "nonStop": non_stop,
             "currencyCode": "GBP",
             "max": "2",
         }
