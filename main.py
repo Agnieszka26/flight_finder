@@ -25,19 +25,16 @@ for row in sheet_data:
                 notification_manager = NotificationManager(flight_data.get_data())
                 notification_manager.send_message()
                 data_manager.update_price(row_id, flight_data.get_data()["price"])
-                print(f"Jest niższa, update your table and alert. \nprice response: {flight_data.get_data()['price']} \nsaved_lowest_price:{saved_lowest_price}")
+                emails = data_manager.get_customer_emails()
+                for to_addrs in emails:
+                    notification_manager.send_email(to_addrs)
+                print(f"In Amadeus, there is lower price, update your table and alert: send sms and email."
+                      f"\nprice response: {flight_data.get_data()['price']} "
+                      f"\nsaved_lowest_price:{saved_lowest_price}")
             else:
-                print(f"nie ma\n{city}"
+                print(f"In Amadeus, there is no lower price for \n{city}"
                       f"\nprice response: {price} \nsaved_lowest_price:{saved_lowest_price}")
     else:
         iata_code = flight_search.iata_code
         print(iata_code)
         data_manager.update_iata_code(row_id, iata_code)
-
-# flight_search = FlightSearch("Hong Kong")
-# offers = flight_search.get_offers("HKG", False)
-# flight_data = FlightData("Hong Kong")
-# flight_data.parse_offer(offers[0])
-# print(flight_data.get_data())
-
-# pprint.pprint(offers)
